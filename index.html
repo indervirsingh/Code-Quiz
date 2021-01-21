@@ -17,9 +17,12 @@
 </head>
 <body class="body">
 
+    <!-- Contains the timer -->
+    <div id="timer"></div>
+
     <div class="container">
 
-
+        <!-- Prompt before starting quiz -->
         <div id="prompt">
             <h4>This is the Coding Quiz.</h4>
             <p>There will be 5 questions.<br>
@@ -27,13 +30,18 @@
                 5 seconds will be deducted for each wrong answer.
             </p>
         </div>
+
+        <!-- Press to begin quiz -->
         <button id="start" class="btn btn-success">Start Quiz</button>
+
         <!-- Load the everything here dynamically -->
         <div id="display"></div>
         <div id="buttons"></div>
         <br>
+        <!-- Next button (SHOULDN'T BE FUNCTIONAL BEFORE STARTING QUIZ!!) -->
         <button id="next" class="btn btn-secondary" disabled>Next Question</button>
 
+        <!-- Dynamically load the results using localStorage and Javascript -->
         <div id="results"></div>
     </div>
 

@@ -1,14 +1,25 @@
 /* VARIABLES */
 
-    // display-div and buttons-div, etc stored here for easy access
+    // This is created HERE for scope purposes, so I can reference submitButton globally
+    var submitButton = $("<button>");
+    submitButton.addClass("btn btn-success btn-lg submit-button");
+    submitButton.text("SUBMIT QUIZ");
+
+    // display-div, buttons-div, etc stored here for easy access
     var displayDiv = $("#display");
     var buttonsDiv = $("#buttons");
     var promptDiv = $("#prompt");
     var resultsDiv = $("#results");
+    var timerDiv = $("#timer");
+
+    // 60 seconds in timer
+    var seconds = 60;
+
+    // Two buttons which are hard coded
     var nextButton = $("#next");
     var startButton = $("#start");
 
-    // Keep track of user's score
+    // Keep track of user's score and which question they are on
     var score = 0, questionNumber = 0;
 
     // These are the questions that will be asked
@@ -49,7 +60,7 @@
         questionDiv.addClass("questions");
 
         // Add the question text
-        questionDiv.text(question);
+        questionDiv.text(questionNumber+1 + "." + question);
 
 
         // Now add this div to the actual HTML page
@@ -106,7 +117,8 @@
                 localStorage.setItem("score", score);
             }
             else {
-                // take time off timer
+                // Take 5 seconds off timer for wrong answers
+                seconds -= 5;
             };
         });
 
@@ -115,6 +127,11 @@
     };
 
     var loadResults = function () {
+        // Clear everything on screen besides the results
+        clearScreen();
+
+        // Stop the timer since we are done
+        clearInterval(timer);
 
         // Get the user's score from storage
         var endScore = localStorage.getItem("score");
@@ -124,19 +141,30 @@
         results.addClass("results");
 
         // Add the text to display
-        results.text("SCORE: " + endScore);
+        results.text("SCORE: " + endScore + " out of 5");
 
         // Append this div to HTML page
         resultsDiv.append(results);
-
-        // REMEMBER TO CLEAR THE STORAGE
-        localStorage.clear();
     };
 
+    var clearScreen = function () {
+        displayDiv.empty();
+        buttonsDiv.empty();
+    }
+
     startButton.on("click", function () {
+        // Clear the localStorage of any stored data, this is the START of a new quiz
+        localStorage.clear();
+        // Hide the start button as well as the quiz prompt
         promptDiv.hide();
         startButton.hide();
+
+        // Make sure to enable the next button, enabling the user to go to next question
         document.getElementById("next").disabled = false; 
+        
+        // Create the timer
+        var timer = setTimeout(updateTimer, 1000);
+        timerDiv.text("Time Remaining: " + seconds);
         loadQuestion(quizQuestions[questionNumber], questionNumber);
     });
 
@@ -146,29 +174,44 @@
         questionNumber++;
 
         // First clear the screen then load the next question
-        displayDiv.empty();
-        buttonsDiv.empty();
+        clearScreen();
 
-        // If there is a next question, continue, otherwise disable next button
+        // Load the next question,
+        // This condition makes sure the questions are in order, error handling etc.
         if (questionNumber < quizQuestions.length) {
             loadQuestion(quizQuestions[questionNumber], questionNumber);
         }
-        else {
 
+        // This is a special condition which only happens on the last question
+        if (questionNumber === quizQuestions.length - 1) {
+            // Hide the next question button and append the submitButton to HTML page
             nextButton.hide();
-            // Show results
 
-            loadResults();
+            // I created the button above with the other variables, but it has not been added yet until now
+            buttonsDiv.append("<br>");
+            buttonsDiv.append(submitButton);
 
-        }
+        };
         
     });
 
+    submitButton.on("click", function () {
+        // Since this is the last question, we just go to results
+        loadResults();
+    });
 
+    var updateTimer = function() {
 
-
-
-
+        if (seconds > 0) {
+            timerDiv.text("Time Remaining:" + --seconds);
+            timer = setTimeout(updateTimer, 1000);
+        }
+        else{
+            alert("TIMES UP!!");
+            nextButton.hide();
+            loadResults();
+        };
+    };
 
 
 /* END-FUNCTIONS */
