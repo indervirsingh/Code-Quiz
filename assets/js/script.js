@@ -61,7 +61,10 @@ $(document).ready(function () {
             var choice = $("<button>");
 
             // Add a class to it, for later styling use
-            choice.addClass("choices");
+            choice.addClass("btn btn-outline-primary choices");
+
+            // Add the attribute so it can be differentiated from other wrong/correct answers
+            choice.attr(currentChoice);
 
             // Add the text to the button
             choice.text(currentChoice);
@@ -98,6 +101,7 @@ $(document).ready(function () {
         loadChoices(questionNumber);
 
         // Create conditions
+
 
 
 
