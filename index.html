@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <header>
+        <h1 class="title">Coding Quiz Challenge</h1>
+        <p>Answer each question to the best of your ability. Your score will be recorded at the end. If you answer a question incorrectly then the 10 seconds will be taken off the timer.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Load the quiz questions here dynamically using Javascript -->
+        <div id="quiz-questions"></div>
+
+    </div>
+
+    <button id="previous" type="button" class="btn btn-outline-primary">Previous Question</button>
+    <button id="next" type="button" class="btn btn-outline-primary">Next Question</button>
+    <button id="submit" type="button" class="btn btn-outline-success">Submit Quiz</button>
+</body>
+</html>
