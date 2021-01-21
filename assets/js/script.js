@@ -4,6 +4,7 @@
     var displayDiv = $("#display");
     var buttonsDiv = $("#buttons");
     var promptDiv = $("#prompt");
+    var nextButton = $("#next");
     var startButton = $("#start");
 
     // Keep track of user's score
@@ -14,7 +15,7 @@
 
         "What is JavaScript?",
         "Which one of these is NOT a data type in Javascript?",
-        "What grade should Indervir get on this quiz?"
+        "Which one of these is a type of loop?"
     ];
 
     // Each index has 3 choices, which should correlate to the index of quizQuestions
@@ -22,7 +23,7 @@
 
         ["Modern Programming Language", "Java Knock Off", "Ice Cream"],
         ["Boolean", "String", "Function"],
-        ["F", "A", "D"]
+        ["While", "AND", "Modulus"]
 
     ];
 
@@ -95,7 +96,7 @@
             var choiceValue = ($(this).attr("id"));
 
             // This is if the user selects a correct answer
-            if ((choiceValue === "ModernProgrammingLanguage") || (choiceValue === "Function") || (choiceValue === "A")) {
+            if ((choiceValue === "ModernProgrammingLanguage") || (choiceValue === "Function") || (choiceValue === "While")) {
                 score++;
             }
             else {
@@ -129,7 +130,7 @@
             loadQuestion(quizQuestions[questionNumber], questionNumber);
         }
         else {
-            nextButton.hide();
+            // Show results
         }
         
     });
