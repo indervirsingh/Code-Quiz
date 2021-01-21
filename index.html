@@ -8,6 +8,9 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 
+    <!-- JS -->
+    <script src="./assets/js/script.js"></script>
+
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 
@@ -17,20 +20,14 @@
 </head>
 <body>
 
-    <header>
-        <h1 class="title">Coding Quiz Challenge</h1>
-        <p>Answer each question to the best of your ability. Your score will be recorded at the end. If you answer a question incorrectly then the 10 seconds will be taken off the timer.</p>
-    </header>
+    <!-- Load the everything here dynamically -->
+    <div id="display">
 
-    <div class="container">
-
-        <!-- Load the quiz questions here dynamically using Javascript -->
         <div id="quiz-questions"></div>
+        <div id="buttons"></div>
 
     </div>
 
-    <button id="previous" type="button" class="btn btn-outline-primary">Previous Question</button>
-    <button id="next" type="button" class="btn btn-outline-primary">Next Question</button>
-    <button id="submit" type="button" class="btn btn-outline-success">Submit Quiz</button>
+    
 </body>
 </html>
