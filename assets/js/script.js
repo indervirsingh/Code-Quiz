@@ -1,7 +1,10 @@
 $(document).ready(function () {
 
+
+/* VARIABLES */
+
     // display-div stored here for easy access
-    var displayDiv = Document.querySelector("#display");
+    var displayDiv = $("#display");
 
     // Keep track of user's score and the question they are on
     var score = 0, questionNumber = 0;
@@ -14,7 +17,7 @@ $(document).ready(function () {
     ];
 
 
-    // All functions here
+/* FUNCTIONS */
 
     var loadQuestion = function (question, questionNumber) {
 
@@ -22,6 +25,7 @@ $(document).ready(function () {
         var questionDiv = $("<div>");
         questionDiv.addClass("question");
         questionDiv.text(question);
+
 
         // Now add this div to the actual HTML page
         displayDiv.append(questionDiv);
@@ -57,7 +61,5 @@ $(document).ready(function () {
 
     };
 
-    var displayQuestion = function(questionNumber) {
 
-    };
 });
