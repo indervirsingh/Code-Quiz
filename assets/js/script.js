@@ -1,9 +1,10 @@
 /* VARIABLES */
 
-    // display-div and buttons-div stored here for easy access
+    // display-div and buttons-div, etc stored here for easy access
     var displayDiv = $("#display");
     var buttonsDiv = $("#buttons");
-    var nextButton = $("#next");
+    var promptDiv = $("#prompt");
+    var startButton = $("#start");
 
     // Keep track of user's score
     var score = 0, questionNumber = 0;
@@ -67,7 +68,7 @@
             var choice = $("<button>");
 
             // Add a class to it, for later styling use
-            choice.addClass("choice-button btn btn-outline-primary");
+            choice.addClass("choice-button btn btn-primary");
 
             // Add the text to the button
             choice.text(currentChoice);
@@ -81,6 +82,7 @@
 
             // Add the button to the buttons-div so it shows on screen
             buttonsDiv.append(choice);
+            buttonsDiv.append("<br>");
 
 
 
@@ -89,6 +91,7 @@
 
 
         $(".choice-button").on("click", function () {
+
             var choiceValue = ($(this).attr("id"));
 
             // This is if the user selects a correct answer
@@ -104,6 +107,14 @@
 
     };
 
+
+    startButton.on("click", function () {
+        promptDiv.hide();
+        startButton.hide();
+        document.getElementById("next").disabled = false; 
+        loadQuestion(quizQuestions[questionNumber], questionNumber);
+    });
+
     nextButton.on("click", function () {
 
         // Increment number to get next index in array
@@ -113,8 +124,15 @@
         displayDiv.empty();
         buttonsDiv.empty();
 
-        loadQuestion(quizQuestions[questionNumber], questionNumber);
-    })
+        // If there is a next question, continue, otherwise disable next button
+        if (questionNumber < quizQuestions.length) {
+            loadQuestion(quizQuestions[questionNumber], questionNumber);
+        }
+        else {
+            nextButton.hide();
+        }
+        
+    });
 
 
 
@@ -125,12 +143,5 @@
 
 /* END-FUNCTIONS */
 
-
-
-
-
-
-
-    loadQuestion(quizQuestions[questionNumber], questionNumber);
 
 
