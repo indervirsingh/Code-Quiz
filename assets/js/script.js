@@ -1,12 +1,11 @@
-$(document).ready(function () {
-
-
 /* VARIABLES */
 
-    // display-div stored here for easy access
+    // display-div and buttons-div stored here for easy access
     var displayDiv = $("#display");
+    var buttonsDiv = $("#buttons");
+    var nextButton = $("#next");
 
-    // Keep track of user's score and the question they are on
+    // Keep track of user's score
     var score = 0, questionNumber = 0;
 
     // These are the questions that will be asked
@@ -27,6 +26,11 @@ $(document).ready(function () {
     ];
 
 
+
+
+/* END-VARIABLES */
+
+
 /* FUNCTIONS */
 
     var loadQuestion = function (question, questionNumber) {
@@ -44,6 +48,8 @@ $(document).ready(function () {
         // Now add this div to the actual HTML page
         displayDiv.append(questionDiv);
 
+        // Now load the choices
+        loadChoices(questionNumber);
     };
 
     var loadChoices = function (questionNumber) {
@@ -61,53 +67,70 @@ $(document).ready(function () {
             var choice = $("<button>");
 
             // Add a class to it, for later styling use
-            choice.addClass("btn btn-outline-primary choices");
-
-            // Add the attribute so it can be differentiated from other wrong/correct answers
-            choice.attr(currentChoice);
+            choice.addClass("choice-button btn btn-outline-primary");
 
             // Add the text to the button
             choice.text(currentChoice);
 
-            // Add the button to the display-div so it shows on screen
-            displayDiv.append(choice);
+            // Delete spaces first, if there are any
+            currentChoice = currentChoice.replace(/\s+/g, '');
 
-        }
-
-
-    };
+            // Add an ID so it can be differentiated from other wrong/correct answers
+            choice.attr("id", currentChoice);
 
 
-
-
+            // Add the button to the buttons-div so it shows on screen
+            buttonsDiv.append(choice);
 
 
 
+        };
 
 
 
+        $(".choice-button").on("click", function () {
+            var choiceValue = ($(this).attr("id"));
 
-
-    // Loop through each question and display it 
-    for (let questionNumber = 0; questionNumber < quizQuestions.length; questionNumber++) {
-
-        // Keep the current question here for easy readability
-        const currentQuestion = quizQuestions[questionNumber];
-
-        // This function will display the question on screen
-        loadQuestion(currentQuestion, questionNumber);
-
-        // This function will display the correlating choices on screen
-        loadChoices(questionNumber);
-
-        // Create conditions
-
-
-
+            // This is if the user selects a correct answer
+            if ((choiceValue === "ModernProgrammingLanguage") || (choiceValue === "Function") || (choiceValue === "A")) {
+                score++;
+            }
+            else {
+                // take time off timer
+            };
+        });
 
 
 
     };
 
+    nextButton.on("click", function () {
 
-});
+        // Increment number to get next index in array
+        questionNumber++;
+
+        // First clear the screen then load the next question
+        displayDiv.empty();
+        buttonsDiv.empty();
+
+        loadQuestion(quizQuestions[questionNumber], questionNumber);
+    })
+
+
+
+
+
+
+
+
+/* END-FUNCTIONS */
+
+
+
+
+
+
+
+    loadQuestion(quizQuestions[questionNumber], questionNumber);
+
+
