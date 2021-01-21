@@ -5,6 +5,16 @@
     submitButton.addClass("btn btn-success btn-lg submit-button");
     submitButton.text("SUBMIT QUIZ");
 
+    // Create a input where the user can save their score, at the end
+    var initialInput = $("<input id=\"initialID\">");
+    initialInput.addClass("initialInput");
+
+    // Create the saveScore button
+    var saveButton = $("<button>");
+    saveButton.addClass("btn btn-success btn-lg save-button");
+    saveButton.text("SAVE SCORE");
+
+
     // display-div, buttons-div, etc stored here for easy access
     var displayDiv = $("#display");
     var buttonsDiv = $("#buttons");
@@ -154,19 +164,46 @@
         // Stop the timer since we are done
         clearInterval(timer);
 
-        // Get the user's score from storage
-        var endScore = localStorage.getItem("score");
-
         // Create a new div to display results
         var results = $("<div>");
         results.addClass("results");
 
         // Add the text to display
-        results.text("SCORE: " + endScore + " out of 5");
+        results.text("SCORE: " + score + " out of 5");
 
         // Append this div to HTML page
         resultsDiv.append(results);
+
+        // Add the input area where user can enter their initials
+        resultsDiv.append("<span id=\"initials\">Initials: </span>");
+        resultsDiv.append(initialInput);
+
+        // Add the saveButton
+        resultsDiv.append("<br>")
+        resultsDiv.append(saveButton);
     };
+
+    // var loadScores = function () {
+    //     clearScreen();
+
+    //     // Create a div to store the user scores and display them
+    //     var userScores = $("<div>");
+    //     userScores.addClass("userScores");
+
+    //     // Get all users stored
+    //     var users = localStorage.getItem("user");
+
+    //     // Loop through them and add to the div
+    //     for (let i = 0; i < users.length; i++) {
+    //         var initial = JSON.parse(users[i].initials);
+    //         var score = JSON.parse(users[i].score);
+
+    //         userScores.text("Initial: " + initial);
+    //         displayDiv.append(userScores);
+    //         userScores.text("Score: " + score);
+    //         displayDiv.append(userScores);
+    //     }
+    // };
 
     var clearScreen = function () {
         displayDiv.empty();
@@ -175,7 +212,7 @@
 
     startButton.on("click", function () {
         // Clear the localStorage of any stored data, this is the START of a new quiz
-        localStorage.clear();
+        // localStorage.clear();
         // Hide the start button as well as the quiz prompt
         promptDiv.hide();
         startButton.hide();
@@ -239,6 +276,22 @@
     submitButton.on("click", function () {
         // Since this is the last question, we just go to results
         loadResults();
+    });
+
+    saveButton.on("click", function() {
+
+        var input = document.querySelector("#initialID");
+        // Create user object to store high-score
+        var user = {
+            initials: input.value.trim(),
+            score: score
+        };
+
+        // Save score/user
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // // Load all the scores
+        // loadScores();
     });
 
     var updateTimer = function() {
