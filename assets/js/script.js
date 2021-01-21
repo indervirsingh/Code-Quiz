@@ -1,8 +1,7 @@
 $(document).ready(function () {
 
-    // display-div and buttons-div stored here for easy access
+    // display-div stored here for easy access
     var displayDiv = Document.querySelector("#display");
-    var buttonsDiv = Document.querySelector("#buttons");
 
     // Keep track of user's score and the question they are on
     var score = 0, questionNumber = 0;
@@ -14,11 +13,51 @@ $(document).ready(function () {
         "What grade should Indervir get on this quiz?"
     ];
 
+
+    // All functions here
+
+    var loadQuestion = function (question, questionNumber) {
+
+        // Create a new div which displays the current question
+        var questionDiv = $("<div>");
+        questionDiv.addClass("question");
+        questionDiv.text(question);
+
+        // Now add this div to the actual HTML page
+        displayDiv.append(questionDiv);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Loop through each question and display it 
     for (let i = 0; i < quizQuestions.length; i++) {
-        // keep the current question here for easy readability
+
+        // Keep the current question here for easy readability
         const currentQuestion = quizQuestions[i];
 
-        
-    }
-})
+        // This function is where the questions will be loaded
+        loadQuestion(currentQuestion, i);
+
+
+
+
+
+
+    };
+
+    var displayQuestion = function(questionNumber) {
+
+    };
+});
