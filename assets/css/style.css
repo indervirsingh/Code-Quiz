@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+.body {
+    background-color: #444;
+}
+
 #timer {
     font-family: 'JetBrains Mono', monospace;
     color: red;
@@ -6,21 +10,25 @@
     padding-top: 15px;
     padding-right: 25px;
 }
-#prompt {
-    color: red;
-    text-align: center;
-}
-.body {
-    background-color: #444;
-}
 
-
-.questions {
-    font-size: large;
-    color: #fff;
-}
 .container {
     font-family: 'JetBrains Mono', monospace;
     text-align: center;
     padding-top: 100px;
 }
+
+#prompt {
+    color: red;
+    text-align: center;
+}
+
+.questions {
+    font-size: large;
+    color: #fff;
+}
+
+.results {
+    font-size: 40px;
+    color: red;
+}
+

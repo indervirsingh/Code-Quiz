@@ -15,9 +15,10 @@
     // 60 seconds in timer
     var seconds = 60;
 
-    // Two buttons which are hard coded
+    // 2 buttons which are hard coded
     var nextButton = $("#next");
     var startButton = $("#start");
+    // var prevButton = $("#previous");
 
     // Keep track of user's score and which question they are on
     var score = 0, questionNumber = 0;
@@ -107,8 +108,12 @@
 
 
 
+        // Needs to be HERE due to scope of "choice-button"
         $(".choice-button").on("click", function () {
+            // Disable the other choices
+            disableChoices();
 
+            // This will hold what the user selected
             var choiceValue = ($(this).attr("id"));
 
             // This is if the user selects a correct answer
@@ -120,15 +125,31 @@
                 // Take 5 seconds off timer for wrong answers
                 seconds -= 5;
             };
+
+            
         });
 
 
 
     };
 
+    var disableChoices = function (choiceValue) {
+        // Go through all the choice-buttons, disable all
+        var buttons = document.querySelectorAll(".choice-button");
+
+        for (let i = 0; i < 3; i++) {
+            const currentButton = buttons[i];
+            currentButton.disabled = true;
+        }
+
+        // Also disable previousButton since we aren't allowed multiple tries
+        // document.getElementById("previous").disabled = true;
+    };
+
     var loadResults = function () {
         // Clear everything on screen besides the results
         clearScreen();
+        // prevButton.hide();
 
         // Stop the timer since we are done
         clearInterval(timer);
@@ -161,17 +182,38 @@
 
         // Make sure to enable the next button, enabling the user to go to next question
         document.getElementById("next").disabled = false; 
-        
+
         // Create the timer
         var timer = setTimeout(updateTimer, 1000);
         timerDiv.text("Time Remaining: " + seconds);
         loadQuestion(quizQuestions[questionNumber], questionNumber);
     });
 
-    nextButton.on("click", function () {
+    /* SAVE IN CASE NEEDED LATER
 
+    prevButton.on("click", function () {
+        // Decrement number to get correct index
+        questionNumber--;
+
+        // Clear the screen of everything first
+        clearScreen();
+
+        // Now load the previous question
+        loadQuestion(quizQuestions[questionNumber], questionNumber);
+    });
+
+    */
+
+    nextButton.on("click", function () {
         // Increment number to get next index in array
         questionNumber++;
+
+        // Only allow enable the prevButton if there is a previous question there
+        // Ex: CAN'T PREVIOUS ON QUESTION 1
+        // if (questionNumber > 0) {
+        //     document.getElementById("previous").disabled = false;
+        // }
+
 
         // First clear the screen then load the next question
         clearScreen();
@@ -190,9 +232,8 @@
             // I created the button above with the other variables, but it has not been added yet until now
             buttonsDiv.append("<br>");
             buttonsDiv.append(submitButton);
-
         };
-        
+
     });
 
     submitButton.on("click", function () {
@@ -206,7 +247,7 @@
             timerDiv.text("Time Remaining:" + --seconds);
             timer = setTimeout(updateTimer, 1000);
         }
-        else{
+        else {
             alert("TIMES UP!!");
             nextButton.hide();
             loadResults();
