@@ -6,7 +6,7 @@
 *   [HTML](/index.html)
 *   [JS](/assets/js/script.js)
 *   [CSS](/assets/css/style.css)
-*   [Screenshots](/Assets/quiz-screenshot.png)
+*   [Screenshots](/assets/quiz-screenshot.png)
 
 ### How it Works:
     There are 5 coding-related questions.
@@ -16,4 +16,4 @@
     You have the option to save your score at the end.
 
 ### Preview
-![Screenshot-1](/Assets/quiz-screenshot.png)
+![Screenshot-1](/assets/quiz-screenshot.png)
