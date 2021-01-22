@@ -17,6 +17,9 @@
 </head>
 <body class="body">
 
+    <!-- Contains high-scores -->
+    <a id="high-scores" href="#" src="./assets/js/script.js" onclick="loadHighestScore()">View Highscores</a>
+
     <!-- Contains the timer -->
     <div id="timer"></div>
 
@@ -39,9 +42,11 @@
         <div id="buttons"></div>
         <br>
 
-        <!-- Next & Previous button (SHOULDN'T BE FUNCTIONAL BEFORE STARTING QUIZ!!) -->
-        <!-- <button id="previous" class="btn btn-secondary" disabled>Previous Question</button> -->
+        <!-- Next button (SHOULDN'T BE FUNCTIONAL BEFORE STARTING QUIZ!!) -->
         <button id="next" class="btn btn-secondary" disabled>Next Question</button>
+        
+        <!-- Reset button -->
+        <!-- <button id="reset" class="btn btn-secondary reset-button">RESET</button> -->
 
         <!-- Dynamically load the results using localStorage and Javascript -->
         <div id="results"></div>

@@ -3,6 +3,13 @@
     background-color: #444;
 }
 
+#high-scores {
+    font-family: 'JetBrains Mono', monospace;
+    color: red;
+    text-align: left;
+    padding-left: 25px;
+}
+
 #timer {
     font-family: 'JetBrains Mono', monospace;
     color: red;

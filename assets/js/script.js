@@ -1,5 +1,9 @@
 /* VARIABLES */
 
+    // Create the high score list
+    var highestScoresDiv = $("<div>");
+    highestScoresDiv.addClass("highest-scores");
+
     // This is created HERE for scope purposes, so I can reference submitButton globally
     var submitButton = $("<button>");
     submitButton.addClass("btn btn-success btn-lg submit-button");
@@ -8,6 +12,11 @@
     // Create a input where the user can save their score, at the end
     var initialInput = $("<input id=\"initialID\">");
     initialInput.addClass("initialInput");
+
+    // Create a previous button, to go back from the scores to the main menu
+    var previousButton = $("<button>");
+    previousButton.addClass("btn btn-secondary")
+    previousButton.text("Go Back");
 
     // Create the saveScore button
     var saveButton = $("<button>");
@@ -28,6 +37,7 @@
     // 2 buttons which are hard coded
     var nextButton = $("#next");
     var startButton = $("#start");
+    var resetButton = $("#reset-button");
     // var prevButton = $("#previous");
 
     // Keep track of user's score and which question they are on
@@ -129,14 +139,20 @@
             // This is if the user selects a correct answer
             if ((choiceValue === "ModernProgrammingLanguage") || (choiceValue === "Function") || (choiceValue === "While") || (choiceValue === "intx=2;") || (choiceValue === "ObjectOrientedProgramming")) {
                 score++;
-                localStorage.setItem("score", score);
+                //localStorage.setItem("score", score);
+
+                // Show user they got it right
+                isRight(choiceValue);
             }
             else {
                 // Take 5 seconds off timer for wrong answers
                 seconds -= 5;
+
+                // Notify user they got it wrong
+                isWrong(choiceValue, questionNumber);
             };
 
-            
+
         });
 
 
@@ -159,7 +175,6 @@
     var loadResults = function () {
         // Clear everything on screen besides the results
         clearScreen();
-        // prevButton.hide();
 
         // Stop the timer since we are done
         clearInterval(timer);
@@ -181,34 +196,65 @@
         // Add the saveButton
         resultsDiv.append("<br>")
         resultsDiv.append(saveButton);
+        resultsDiv.show();
     };
 
-    // var loadScores = function () {
-    //     clearScreen();
+    var loadHighestScore = function () {
+        // Get the last saved highest score
+        var userString = localStorage.getItem("user");
+        var userObject = JSON.parse(userString);
+        var initial = userObject.initials;
+        var score = userObject.score;
 
-    //     // Create a div to store the user scores and display them
-    //     var userScores = $("<div>");
-    //     userScores.addClass("userScores");
+        clearScreen();
+        promptDiv.hide()
+        resultsDiv.hide();
+        startButton.hide();
+        nextButton.hide();
 
-    //     // Get all users stored
-    //     var users = localStorage.getItem("user");
+        // Display the highest score
+        displayDiv.append("<h3 class=\"highest-scores\" >HIGH-SCORE</h3>");
+        highestScoresDiv.text("1. " + initial + " - " + score);
+        displayDiv.append(highestScoresDiv);
 
-    //     // Loop through them and add to the div
-    //     for (let i = 0; i < users.length; i++) {
-    //         var initial = JSON.parse(users[i].initials);
-    //         var score = JSON.parse(users[i].score);
+        // Add the previous button, to get back to main prompt
+        previousButton.show();
+        buttonsDiv.append("<br>", previousButton);
 
-    //         userScores.text("Initial: " + initial);
-    //         displayDiv.append(userScores);
-    //         userScores.text("Score: " + score);
-    //         displayDiv.append(userScores);
-    //     }
-    // };
+    };
 
     var clearScreen = function () {
         displayDiv.empty();
         buttonsDiv.empty();
     }
+
+    var isRight = function(choiceValue) {
+        // Say You're Right!
+        alert("Your answer \"" + choiceValue + "\"  was correct!");
+    };
+
+    var isWrong = function (choiceValue, questionNumber) {
+        var correctAnswer = "";
+        switch (questionNumber) {
+            case 0:
+                correctAnswer = choices[0][0];
+                break;
+            case 1:
+                correctAnswer = choices[1][2];
+                break;
+            case 2:
+                correctAnswer = choices[2][0];
+                break;
+            case 3:
+                correctAnswer = choices[3][0];
+                break;
+            case 4:
+                correctAnswer = choices[4][1];
+                break;
+        };
+        alert("Your answer: " +  choiceValue + "\n Correct answer: " + correctAnswer);
+
+    };
 
     startButton.on("click", function () {
         // Clear the localStorage of any stored data, this is the START of a new quiz
@@ -216,30 +262,37 @@
         // Hide the start button as well as the quiz prompt
         promptDiv.hide();
         startButton.hide();
+        nextButton.show();
+        displayDiv.show();
 
         // Make sure to enable the next button, enabling the user to go to next question
         document.getElementById("next").disabled = false; 
 
+        
+        // THIS ALLOWS THE RESET
+        seconds = 60;
+        questionNumber = 0;
+        
         // Create the timer
         var timer = setTimeout(updateTimer, 1000);
         timerDiv.text("Time Remaining: " + seconds);
         loadQuestion(quizQuestions[questionNumber], questionNumber);
     });
 
-    /* SAVE IN CASE NEEDED LATER
 
-    prevButton.on("click", function () {
-        // Decrement number to get correct index
-        questionNumber--;
+    previousButton.on("click", function () {
+        // First I need to hide the previous button and highscores
+        highestScoresDiv.empty();
+        previousButton.hide();
+        displayDiv.empty();
+        resultsDiv.empty();
 
-        // Clear the screen of everything first
-        clearScreen();
+        // I will unhide everything and display the main menu
+        promptDiv.show();
+        startButton.show();
 
-        // Now load the previous question
-        loadQuestion(quizQuestions[questionNumber], questionNumber);
     });
 
-    */
 
     nextButton.on("click", function () {
         // Increment number to get next index in array
@@ -290,9 +343,14 @@
         // Save score/user
         localStorage.setItem("user", JSON.stringify(user));
 
-        // // Load all the scores
-        // loadScores();
+
+        loadHighestScore();
     });
+
+    // resetButton.on("click", function () {
+    //     window.location.reload("./script.js");
+    //     return false;
+    // });
 
     var updateTimer = function() {
 
