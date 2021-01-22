@@ -5,8 +5,8 @@
 ### Table of Contents
 *   [HTML](/index.html)
 *   [JS](/assets/js/script.js)
-*   [CSS](/assets/cs/style.css)
-*   [Screenshots](/Assets)
+*   [CSS](/assets/css/style.css)
+*   [Screenshots](/Assets/quiz-screenshot.png)
 
 ### How it Works:
     There are 5 coding-related questions.
