@@ -16,4 +16,4 @@
     You have the option to save your score at the end.
 
 ### Preview
-![Screenshot-1](/Assets/quiz-screenshot.png = 350 x 350)
+![Screenshot-1](/Assets/quiz-screenshot.png){:height="50%" width="50%"}
